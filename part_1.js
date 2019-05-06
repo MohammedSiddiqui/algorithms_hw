@@ -35,7 +35,7 @@ export function buildRealizationTable(givenArray) {
     log(result);
 
     return {
-        result,
+        tableResult: result,
         rowValues
     }
 }
@@ -52,12 +52,12 @@ function realizable(A = [], T = 0) {
         return true;
     }
 
-    const { result, rowValues } = buildRealizationTable(givenArray);
+    const { tableResult, rowValues } = buildRealizationTable(givenArray);
 
     const lastRowIndex = rowValues.length - 1;
     const lastRowValue = rowValues[lastRowIndex];
 
-    return !!result[rowColumnKey(lastRowIndex, lastRowValue, givenValue)];
+    return !!tableResult[rowColumnKey(lastRowIndex, lastRowValue, givenValue)];
 }
 
 console.log(
