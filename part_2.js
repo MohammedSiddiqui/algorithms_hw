@@ -1,5 +1,10 @@
-import { rowColumnKey } from './common';
-import { buildRealizationTable } from './part_1';
+const { rowColumnKey } = require('./common');
+const { buildRealizationTable } = require('./part_1');
+
+//////////////////////////////////////////////////////////////////////
+const userArray = '26 87 97 87 53 6 29 95 45 71 28 93 52 71 75 49 82 18 26 95'.split(' ').map(x => parseInt(x));
+const userValue = 873;
+//////////////////////////////////////////////////////////////////////
 
 function showOne(A = [], T = 0) {
     const givenArray = A;
@@ -12,7 +17,7 @@ function showOne(A = [], T = 0) {
         return true;
     }
 
-    const { result: tableResult, rowValues } = buildRealizationTable(givenArray);
+    const { tableResult, rowValues } = buildRealizationTable(givenArray);
 
     const lastRowIndex = rowValues.length - 1;
     const lastRowValue = rowValues[lastRowIndex];
@@ -22,15 +27,32 @@ function showOne(A = [], T = 0) {
     if (!isRealizable) {
         return 'Not Realizable !';
     }
+    let selectedValue = givenValue;
 
-    let resultPath = '';
+    return rowValues.reverse().reduce((accumulatedResult, rowValue, rowIndex, array) => {
+        const reversedIndex = lastRowIndex - rowIndex;
+        const prevRowIndex = reversedIndex - 1;
+        const prevRowValue = array[rowIndex + 1];
 
-    rowValues.reverse().forEach((rowValue, rowIndex, array) => {
-        const reversedIndex = Math.abs(rowIndex - (array.length - 1));
+        const subValue = selectedValue - rowValue;
+        const addValue = selectedValue + rowValue;
 
-        const subValue = tableResult[rowColumnKey(reversedIndex, rowValue)];
+        if (tableResult[rowColumnKey(prevRowIndex, prevRowValue, subValue)]) {
+            selectedValue = subValue;
+            return accumulatedResult.concat(`+${rowValue}`);
+        }
+        else if (tableResult[rowColumnKey(prevRowIndex, prevRowValue, addValue)]) {
+            selectedValue = addValue;
+            return accumulatedResult.concat(-rowValue);
+        }
+        else {
+            // To handle and just return in case of last element being zero.
+            return accumulatedResult;
+        }
 
-    })
-
-    return resultPath;
+    }, '');
 }
+
+console.log(
+    showOne(userArray, userValue)
+);

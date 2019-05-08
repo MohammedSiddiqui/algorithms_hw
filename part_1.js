@@ -1,4 +1,4 @@
-import { log, minToMaxFiller, rowColumnKey } from './common';
+const { log, minToMaxFiller, rowColumnKey } = require('./common');
 
 //////////////////////////////////////////////////////////////////////
 const userArray = '26 87 97 87 53 6 29 95 45 71 28 93 52 71 75 49 82 18 26 95'.split(' ').map(x => parseInt(x));
@@ -6,7 +6,7 @@ const userValue = 873;
 
 //////////////////////////////////////////////////////////////////////
 
-export function buildRealizationTable(givenArray) {
+function buildRealizationTable(givenArray) {
 
     const maxValue = givenArray.reduce((prev, curr) => prev + curr, 0);
     const columnValues = minToMaxFiller(-maxValue, maxValue);
@@ -40,6 +40,9 @@ export function buildRealizationTable(givenArray) {
     }
 }
 
+module.exports = {
+    buildRealizationTable
+};
 
 function realizable(A = [], T = 0) {
     const givenArray = A;
