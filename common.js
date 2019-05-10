@@ -6,6 +6,10 @@ function log() {
     }
 }
 
+function newLine() {
+    console.log('\n');
+}
+
 function rowColumnKey(rowIndex, row, column) {
     return `${rowIndex}:${row}:${column}`;
 }
@@ -28,5 +32,6 @@ function minToMaxFiller(minValue, maxValue) {
 module.exports = {
     log,
     rowColumnKey,
-    minToMaxFiller
+    minToMaxFiller,
+    newLine,
 };

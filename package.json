@@ -1,0 +1,20 @@
+{
+  "name": "algorithms_hw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MohammedSiddiqui/algorithms_hw.git"
+  },
+  "author": "Mohammed Siddiqui - 15169",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MohammedSiddiqui/algorithms_hw/issues"
+  },
+  "homepage": "https://github.com/MohammedSiddiqui/algorithms_hw#readme"
+}

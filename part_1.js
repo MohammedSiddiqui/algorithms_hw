@@ -1,10 +1,9 @@
 const { log, minToMaxFiller, rowColumnKey } = require('./common');
 
-//////////////////////////////////////////////////////////////////////
-const userArray = '26 87 97 87 53 6 29 95 45 71 28 93 52 71 75 49 82 18 26 95'.split(' ').map(x => parseInt(x));
-const userValue = 873;
-
-//////////////////////////////////////////////////////////////////////
+module.exports = {
+    buildRealizationTable,
+    realizable
+};
 
 function buildRealizationTable(givenArray) {
 
@@ -40,10 +39,6 @@ function buildRealizationTable(givenArray) {
     }
 }
 
-module.exports = {
-    buildRealizationTable
-};
-
 function realizable(A = [], T = 0) {
     const givenArray = A;
     const givenValue = T;
@@ -63,6 +58,3 @@ function realizable(A = [], T = 0) {
     return !!tableResult[rowColumnKey(lastRowIndex, lastRowValue, givenValue)];
 }
 
-console.log(
-    realizable(userArray, userValue)
-);
