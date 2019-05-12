@@ -5,39 +5,28 @@ module.exports = {
     showAll
 };
 
-function solutionBuilder(rowValues, selectedValue, tableResult, maxSolutionLength, finalResult = [], startingSol = '') {
+function solutionBuilder(rowValues, selectedValue, tableResult, finalResult = [], startingSol = '') {
 
-    const solution = rowValues.reduceRight((accumulatedResult, rowValue, rowIndex, array) => {
-        const prevRowIndex = rowIndex - 1;
-        const prevRowValue = array[prevRowIndex];
+    const rowIndex = rowValues.length - 1;
+    const rowValue = rowValues[rowIndex];
+    let accumulatedResult = startingSol;
 
-        const subValue = selectedValue - rowValue;
-        const addValue = selectedValue + rowValue;
+    const prevRowIndex = rowIndex - 1;
+    const prevRowValue = rowValues[prevRowIndex];
 
-        if (tableResult[rowColumnKey(prevRowIndex, prevRowValue, subValue)] && tableResult[rowColumnKey(prevRowIndex, prevRowValue, addValue)]) {
+    const subValue = selectedValue - rowValue;
+    const addValue = selectedValue + rowValue;
 
-            solutionBuilder(rowValues.slice(0, rowIndex), subValue, tableResult, maxSolutionLength, finalResult, accumulatedResult.concat(`+${rowValue}`));
-            solutionBuilder(rowValues.slice(0, rowIndex), addValue, tableResult, maxSolutionLength, finalResult, accumulatedResult.concat(-rowValue));
-
-            return '';
-        }
-        else if (tableResult[rowColumnKey(prevRowIndex, prevRowValue, subValue)]) {
-            selectedValue = subValue;
-            return accumulatedResult.concat(`+${rowValue}`);
-        } else if (tableResult[rowColumnKey(prevRowIndex, prevRowValue, addValue)]) {
-            selectedValue = addValue;
-            return accumulatedResult.concat(-rowValue);
-        }
-        else {
-            // To handle and just return in case of last element being zero.
-            return accumulatedResult;
-        }
-
-    }, startingSol);
-
-    // Only allow valid solutions
-    if (solution && solution.length === maxSolutionLength) {
-        finalResult.push(solution);
+    // Final row has been concluded and processed
+    if (prevRowIndex === -1) {
+        finalResult.push(accumulatedResult);
+        return finalResult;
+    }
+    if (tableResult[rowColumnKey(prevRowIndex, prevRowValue, subValue)]) {
+        solutionBuilder(rowValues.slice(0, rowIndex), subValue, tableResult, finalResult, accumulatedResult.concat(`+${rowValue}`));
+    }
+    if (tableResult[rowColumnKey(prevRowIndex, prevRowValue, addValue)]) {
+        solutionBuilder(rowValues.slice(0, rowIndex), addValue, tableResult, finalResult, accumulatedResult.concat(-rowValue));
     }
 
     return finalResult;
@@ -56,7 +45,5 @@ function showAll(A = [], T = 0) {
 
     const { tableResult, rowValues } = buildRealizationTable(givenArray);
 
-    const maxSolutionLength = givenArray.reduce((prev, curr) => prev + curr.toString().length, 0) + givenArray.length;
-
-    return solutionBuilder(rowValues, givenValue, tableResult, maxSolutionLength);
+    return solutionBuilder(rowValues, givenValue, tableResult);
 }
