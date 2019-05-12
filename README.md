@@ -1,14 +1,14 @@
-#ALGORITHMS Assignment # 1
+# ALGORITHMS Assignment # 1
 
-##Pre-requisites
+## Pre-requisites
 Please have latest NodeJS version, or a minimum version of `8.9.0` .
 
-##How to Run
+## How to Run
 ```bash
 npm run start
 ```
 
-##Overview
+## Overview
 Files `part_1.js`, `part_2.js`, and `part_3.js` contain the relevant code for the questions asked.
 
 The `common.js` file contains functions which are reused across the different parts of the question.
